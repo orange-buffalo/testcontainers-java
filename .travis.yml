@@ -35,14 +35,15 @@ install:
 jobs:
   include:
     - stage: test
-      env:
-        matrix:
-          # Latest
-          - NAME='core'
-          - NAME='core' DOCKER_VERSION='17.05.0~ce'
-          - NAME='core' DOCKER_VERSION='17.04.0~ce'
-          - NAME='core' DOCKER_VERSION='1.13.1'
-          - NAME='core' DOCKER_VERSION='1.12.5'
+      env: [ NAME=core ]
+      script: ./mvnw -pl core test
+    - env: [ NAME=core DOCKER_VERSION='17.05.0~ce' ]
+      script: ./mvnw -pl core test
+    - env: [ NAME=core DOCKER_VERSION='17.04.0~ce' ]
+      script: ./mvnw -pl core test
+    - env: [ NAME=core DOCKER_VERSION='1.13.1' ]
+      script: ./mvnw -pl core test
+    - env: [ NAME=core DOCKER_VERSION='1.12.5' ]
       script: ./mvnw -pl core test
 
     - env: [ NAME=selenium ]
