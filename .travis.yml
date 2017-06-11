@@ -21,7 +21,8 @@ cache: false
 
 install:
   - echo "MAVEN_OPTS='-XX:+TieredCompilation -XX:TieredStopAtLevel=1'" > ~/.mavenrc
-  - > [ "$DOCKER_VERSION" != "_TRAVIS_DEFAULT_" ]
+  - >
+    [ "$DOCKER_VERSION" != "_TRAVIS_DEFAULT_" ]
     && sudo apt-get update -qq
     && sudo apt-get -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew install docker-engine=${DOCKER_VERSION:-*}
   - docker info
