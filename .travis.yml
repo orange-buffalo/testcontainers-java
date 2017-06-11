@@ -12,13 +12,6 @@ env:
     - # ^^ GPG_KEY_NAME
     - secure: "n2RjM3CIvtqMGMXYxjMOXjXB2R7k2lbZ2aV3fcQ0uSlrFqbzyRcTB/oa+Sft3ayUzU5S/qYjCPnNbb7P49vk1K3q5z2A9RVofFk9H90JPBz4cuuLcsuW7apcDPohDNuk47QAccsL0K+KA2AjdiQ/cIe81LWJykV+ogDI7DVXBDY="
     - # ^^ GPG_PASSPHRASE
-  matrix:
-    # Latest
-    - DOCKER_VERSION=*
-    - DOCKER_VERSION=17.05.0~ce
-    - DOCKER_VERSION=17.04.0~ce
-    - DOCKER_VERSION=1.13.1
-    - DOCKER_VERSION=1.12.5
 
 sudo: required
 services:
@@ -42,7 +35,15 @@ install:
 jobs:
   include:
     - stage: test
-      env: [ NAME=core ]
+      env:
+        global: [ NAME=core ]
+        matrix:
+          # Latest
+          - DOCKER_VERSION=*
+          - DOCKER_VERSION=17.05.0~ce
+          - DOCKER_VERSION=17.04.0~ce
+          - DOCKER_VERSION=1.13.1
+          - DOCKER_VERSION=1.12.5
       script: ./mvnw -pl core test
 
     - env: [ NAME=selenium ]
