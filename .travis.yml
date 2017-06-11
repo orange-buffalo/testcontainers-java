@@ -23,8 +23,8 @@ install:
   - echo "MAVEN_OPTS='-XX:+TieredCompilation -XX:TieredStopAtLevel=1'" > ~/.mavenrc
   - >
     [ "$DOCKER_VERSION" != "_TRAVIS_DEFAULT_" ]
-    && sudo apt-get update -qq
-    && sudo apt-get -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew install docker-engine=${DOCKER_VERSION:-*}
+    && ( sudo apt-get update -qq && sudo apt-get -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew install docker-engine=${DOCKER_VERSION:-*} )
+    || true
   - docker info
   # Update env vars required by testcontainers
   - export DOCKER_HOST=tcp://127.0.0.1:2375
