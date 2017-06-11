@@ -24,7 +24,7 @@ cache:
 install:
   - echo "MAVEN_OPTS='-XX:+TieredCompilation -XX:TieredStopAtLevel=1'" > ~/.mavenrc
   - sudo apt-get update -qq
-  - sudo apt-get -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew install docker-engine=$DOCKER_VERSION
+  - sudo apt-get -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew install docker-engine=${DOCKER_VERSION:*}
   - docker info
   # Update env vars required by testcontainers
   - export DOCKER_HOST=tcp://127.0.0.1:2375
@@ -36,14 +36,12 @@ jobs:
   include:
     - stage: test
       env:
-        global: [ NAME=core ]
-        matrix:
-          # Latest
-          - DOCKER_VERSION=*
-          - DOCKER_VERSION=17.05.0~ce
-          - DOCKER_VERSION=17.04.0~ce
-          - DOCKER_VERSION=1.13.1
-          - DOCKER_VERSION=1.12.5
+        # Latest
+        - NAME='core'
+        - NAME='core' DOCKER_VERSION='17.05.0~ce'
+        - NAME='core' DOCKER_VERSION='17.04.0~ce'
+        - NAME='core' DOCKER_VERSION='1.13.1'
+        - NAME='core' DOCKER_VERSION='1.12.5'
       script: ./mvnw -pl core test
 
     - env: [ NAME=selenium ]
