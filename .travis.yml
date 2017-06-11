@@ -17,9 +17,7 @@ sudo: required
 services:
   - docker
 
-cache:
-  directories:
-    - '$HOME/.m2'
+cache: false
 
 install:
   - echo "MAVEN_OPTS='-XX:+TieredCompilation -XX:TieredStopAtLevel=1'" > ~/.mavenrc
@@ -37,13 +35,13 @@ jobs:
     - stage: test
       env: [ NAME=core ]
       script: ./mvnw -pl core test
-    - env: [ NAME=core DOCKER_VERSION='17.05.0~ce' ]
+    - env: [ NAME=core DOCKER_VERSION='17.05.0~ce-0~ubuntu-trusty' ]
       script: ./mvnw -pl core test
-    - env: [ NAME=core DOCKER_VERSION='17.04.0~ce' ]
+    - env: [ NAME=core DOCKER_VERSION='17.04.0~ce-0~ubuntu-trusty' ]
       script: ./mvnw -pl core test
-    - env: [ NAME=core DOCKER_VERSION='1.13.1' ]
+    - env: [ NAME=core DOCKER_VERSION='1.13.1-0~ubuntu-trusty' ]
       script: ./mvnw -pl core test
-    - env: [ NAME=core DOCKER_VERSION='1.12.5' ]
+    - env: [ NAME=core DOCKER_VERSION='1.12.5-0~ubuntu-trusty' ]
       script: ./mvnw -pl core test
 
     - env: [ NAME=selenium ]
