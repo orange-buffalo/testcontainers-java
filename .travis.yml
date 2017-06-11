@@ -12,6 +12,13 @@ env:
     - # ^^ GPG_KEY_NAME
     - secure: "n2RjM3CIvtqMGMXYxjMOXjXB2R7k2lbZ2aV3fcQ0uSlrFqbzyRcTB/oa+Sft3ayUzU5S/qYjCPnNbb7P49vk1K3q5z2A9RVofFk9H90JPBz4cuuLcsuW7apcDPohDNuk47QAccsL0K+KA2AjdiQ/cIe81LWJykV+ogDI7DVXBDY="
     - # ^^ GPG_PASSPHRASE
+  matrix:
+    # Latest
+    - DOCKER_VERSION=*
+    - DOCKER_VERSION=17.05.0~ce
+    - DOCKER_VERSION=17.04.0~ce
+    - DOCKER_VERSION=1.13.1
+    - DOCKER_VERSION=1.12.5
 
 sudo: required
 services:
@@ -24,7 +31,7 @@ cache:
 install:
   - echo "MAVEN_OPTS='-XX:+TieredCompilation -XX:TieredStopAtLevel=1'" > ~/.mavenrc
   - sudo apt-get update -qq
-  - sudo apt-get -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew install docker-engine
+  - sudo apt-get -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew install docker-engine=$DOCKER_VERSION
   - docker info
   # Update env vars required by testcontainers
   - export DOCKER_HOST=tcp://127.0.0.1:2375
